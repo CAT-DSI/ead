@@ -1,0 +1,48 @@
+<div style="margin-right: 5px;">
+    <button type="button" onclick="displayPopup('importFromFile');" class="btn btn-outline-info" style="font-weight: bold;">
+        @_view["ImportFromFile"].Value.ToUpper()
+    </button>
+</div>
+
+@(
+    Html.DevExtreme().Popup()
+        .ID("importFromFile")
+        .Height(300)
+        .Width(500)
+        .ShowTitle(true)
+        .Title(_view["ImportingFromFile"].Value)
+        .Visible(false)
+        .DragEnabled(false)
+        .CloseOnOutsideClick(true)
+        .ContentTemplate(new TemplateName("ImportFromFile"))
+)
+
+@using (Html.DevExtreme().NamedTemplate("ImportFromFile"))
+{
+    @(Html.DevExtreme().FileUploader().ID("uplFile").Name("File").Multiple(false).LabelText("").AllowedFileExtensions(new string[] { ".xlsx", ".xls" }).UploadMode(FileUploadMode.UseForm).Width(200))
+    <br />
+    <button type="button" class="form-control btn btn-outline-success btn-center" onclick="importFromFileClick();" style="font-weight: bold;">
+        @_view["Import"].Value.ToUpper()
+    </button>
+}
+
+<script asp-append-version="true">
+    const importFromFileClick = () => {
+        const formData = new FormData();
+
+        formData.append("file", getFileUploaderValue('uplFile')[0]);
+
+        sendRequest('POST', '/Ocr/ImportFromFile/',
+            e => {
+                hideLoadIndicator();
+                showNotification('divNotification', 'success', e, 5000);
+                reloadDataGridSource('@ViewData["DataGridId"].ToString()');
+                resetFileUploader('uplFile');
+            },
+            e => {
+                hideLoadIndicator();
+                showNotification('divNotification', 'warning', e.responseText, 5000);
+            },
+            formData);
+    }
+</script>

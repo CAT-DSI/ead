@@ -1,0 +1,399 @@
+body, html {
+    margin: 0;
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    padding-top: 57px;
+}
+
+.btn-center {
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+.mom-Green {
+    background-color: green !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.mom-Amber {
+    background-color: gold !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.mom-Red {
+    background-color: red !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.mom-None {
+    background-color: none !important;
+    color: black !important;
+    font-weight: normal !important;
+}
+
+.status-Green {
+    color: green !important;
+    font-weight: bold !important;
+}
+
+.status-Orange {
+    color: darkorange !important;
+    font-weight: bold !important;
+}
+
+.status-Red {
+    color: red !important;
+    font-weight: bold !important;
+}
+
+.load-indicator {
+    position: absolute;
+    z-index: 15;
+    top: 50%;
+    left: 45%;
+    display: inline-flex;
+}
+
+/* obszar paska nag³owka: ikona menu, nazwa plikacji, avatar, menu logowania */
+header {
+}
+
+    header .avatar {
+    }
+
+        header .avatar img {
+            height: 36px;
+            width: 36px;
+            border: 1px solid #d2d3d5;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        header .avatar .nav-link {
+            padding: .1rem;
+        }
+
+.layout-header {
+    flex: 0 0 auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    z-index: 1501;
+    height: 60px;
+}
+
+.dx-toolbar .dx-toolbar-item.menu-button {
+    width: 60px;
+    text-align: center;
+    padding: 0;
+}
+
+    .dx-toolbar .dx-toolbar-item.menu-button > .dx-toolbar-item-content .dx-icon {
+        color: #ff5722;
+    }
+
+.dx-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 2px 2px 3px;
+}
+
+    .dx-card.wide-card {
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+        border-right: 0;
+        border-left: 0;
+    }
+
+.with-footer > div > div > .dx-scrollable-content {
+    height: 100%;
+}
+
+    .with-footer > div > div > .dx-scrollable-content > .dx-scrollview-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+.layout-body-hidden {
+    visibility: hidden;
+}
+
+/* obszar strony pod nag³owkiem: menu + treœæ */
+@media screen and (min-width: 600px) {
+    .layout-body .content-block {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .layout-body .responsive-paddings {
+        padding: 40px;
+    }
+}
+
+.layout-body {
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+}
+
+    /* obszar menu DevEx */
+    .layout-body .menu-container {
+        height: 100%;
+        width: 270px;
+        background-color: #00695c;
+    }
+
+        .layout-body .menu-container .dx-widget {
+            color: #e0f2f1;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: Roboto,RobotoFallback,Helvetica,Arial,sans-serif;
+            line-height: 24px;
+        }
+
+        .layout-body .menu-container .dx-treeview {
+            white-space: nowrap;
+        }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-item {
+                padding-left: 0;
+                padding-right: 0;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+                .layout-body .menu-container .dx-treeview .dx-treeview-item .dx-icon {
+                    width: 60px !important;
+                    margin: 0 !important;
+                }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node {
+                padding: 0 0 !important;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-toggle-item-visibility {
+                /*right: 10px;*/
+                left: auto;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-rtl .dx-treeview-toggle-item-visibility {
+                /*left: 10px;*/
+                right: auto;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node[aria-level="1"] {
+                font-weight: bold;
+                border-bottom: 1px solid #e0f2f1;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node[aria-level="2"] .dx-treeview-item-content {
+                font-weight: normal;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node-container .dx-treeview-node.dx-state-selected:not(.dx-state-focused) > .dx-treeview-item {
+                background: #e0f2f1;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node-container .dx-treeview-node.dx-state-selected > .dx-treeview-item * {
+                color: #00695c;
+            }
+
+            .layout-body .menu-container .dx-treeview .dx-treeview-node-container .dx-treeview-node:not(.dx-state-focused) > .dx-treeview-item.dx-state-hover {
+                background-color: #e0f2f1;
+                color: #00695c;
+            }
+
+    .layout-body .content-block {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+
+    .layout-body .content-footer {
+        display: block;
+        color: #00695c;
+        border-top: 1px solid #e0f2f1;
+        padding-top: 20px;
+        padding-bottom: 24px;
+    }
+
+    .layout-body .responsive-paddings {
+        padding: 20px;
+    }
+
+/* wspólna czêœæ struktury strony z treœci¹ */
+
+/* obsza strony */
+.content {
+    flex-grow: 1;
+    height: 100%;
+    line-height: 1.5;
+    padding: 15px;
+}
+
+    .content .caption {
+        color: #1b4461;
+        display: normal;
+        font-family: "Segoe UI","Helvetica Neue",Helvetica,Verdana,"san-serif";
+        font-size: 2em;
+        font-weight: bold;
+        position: relative;
+    }
+
+    .content .dx-icon-custom-style {
+        font-size: 24px;
+        color: #1b4461;
+    }
+
+    .content .description {
+        color: #333;
+        min-height: 25px;
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .content .widget-container {
+        background-color: #f7f7f7;
+        border: 1px solid #E9E9E9;
+        /*min-height: 500px;*/
+        padding: 10px;
+    }
+
+        .content .widget-container .card-row-all {
+            box-sizing: border-box;
+            margin-bottom: 2%;
+            padding: 10px;
+            position: relative;
+            background-color: #FFFFFF;
+            border: 1px solid #E9E9E9;
+        }
+
+.card-footer {
+    background: transparent;
+    border-top: 0px;
+    float: right;
+}
+
+.card-button {
+    float: right;
+}
+
+.card-button-column {
+    align-self: end;
+    float: right;
+}
+
+.card-body {
+    /*padding-bottom: 0px;*/
+}
+
+/*Add new person*/
+.first-group,
+.second-group {
+    padding: 20px;
+}
+
+.form-avatar {
+    height: 128px;
+    width: 128px;
+    margin: auto;
+    border: 1px solid #d2d3d5;
+    border-radius: 50%;
+    background-position: center;
+    vertical-align: middle;
+    display: flex;
+}
+
+/*.form-avatar {
+    height: 128px;
+    width: 128px;
+    margin: auto;
+    border: 1px solid #d2d3d5;
+    border-radius: 50%;
+    background-image: url('images/User_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: central;
+}*/
+
+/*Ekran logowania - skalowanie*/
+#card-login {
+    max-width: 50%;
+    margin-top: 5%;
+}
+
+@media (max-width: 1199.98px) {
+    #card-login {
+        max-width: 60%;
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    #card-login {
+        max-width: 80%;
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #card-login {
+        min-width: 90%;
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #card-login {
+        max-width: 100%;
+        margin-top: 5%;
+    }
+}
+
+/*.dx-theme-ios .dx-switch .dx-switch-on {
+    background: red;
+}
+
+.dx-theme-ios .dx-switch .dx-switch-handle {
+    background: orange;
+}
+
+.dx-theme-ios .dx-switch .dx-switch-off {
+    background: yellow;
+}*/
+
+/*.dx-switch.dx-state-hover .dx-switch-handle:before {
+    background-color: yellow !important;
+}*/
+
+.dx-switch-handle:before {
+    background-color: red !important;
+}
+
+/*.dx-switch.dx-state-hover.dx-switch-on-value .dx-switch-handle:before {
+    background-color: green !important;
+}*/
+
+.dx-switch-on-value .dx-switch-handle:before {
+    background-color: #3cbab2 !important;
+}
+
+.notification {
+    position: fixed;
+    left: 50%;
+    z-index: 999;
+}

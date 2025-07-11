@@ -1,0 +1,133 @@
+@{
+    ViewData["Title"] = _view["Title"].Value;
+
+    bool isManager = User.IsInRole(PermissionsType.IsManager);
+}
+
+<div class="row h-100">
+    <div class="col-sm-12">
+        @(
+            Html.DevExtreme().TabPanel()
+                .ID("tabPanels")
+                .RepaintChangesOnly(true)
+                .OnSelectionChanged("tabPanels_OnSelectionChanged")
+                .Items(items =>
+                {
+                    items.Add().Title(_view["DIFF"].Value.ToUpper()).Template(new TemplateName("UnrecognizedFilesTemplate"));
+                    items.Add().Title(_view["TEMP"].Value.ToUpper()).Template(new TemplateName("RecognizedFilesTemplate"));
+                })
+        )
+    </div>
+</div>
+
+@using (Html.DevExtreme().NamedTemplate("UnrecognizedFilesTemplate"))
+{
+    @(Html.DevExtreme().DataGrid<BarcodeFileViewModel>()
+            .ID("grdBarcodeFiles")
+            .OnRowUpdated("grdBarcodeFiles_OnRowUpdated")
+            .OnRowRemoved("grdBarcodeFiles_OnRowRemoved")
+            .OnDataErrorOccurred("grdBarcodeFiles_OnDataErrorOccurred")
+            .DataSource(d => d.Mvc().Controller("Preview").LoadAction("GetUnrecognizedFiles").UpdateAction("Update").UpdateMethod("Get").DeleteAction("Delete").DeleteMethod("Get").Key("Path"))
+            .RepaintChangesOnly(true)
+            .ErrorRowEnabled(false)
+            .SearchPanel(s => s.Visible(true).Width(250).HighlightSearchText(false))
+            .HeaderFilter(f => f.Visible(true).AllowSearch(true))
+            .ShowBorders(true)
+            .Paging(p => p.PageSize(25))
+            .Pager(p => p.Visible(true).ShowPageSizeSelector(true).AllowedPageSizes(new[] { 25, 50, 100, 250, 500, 1000 }).ShowInfo(true))
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.Path).Visible(false);
+                columns.AddFor(m => m.OrgUnit).AllowEditing(false);
+                columns.AddFor(m => m.Date).Format(GlobalConfig.DateTimeFormat).AllowEditing(false);
+                columns.AddFor(m => m.Barcode);
+                columns.Add()
+                    .Type(GridCommandColumnType.Buttons)
+                    .Visible(true)
+                    .Width(isManager ? 75 : 50)
+                    .Buttons(b =>
+                    {
+                        b.Add().Name("PreviewFile").Icon("fa fa-search").Hint(_view["PreviewFile"].Value).OnClick("previewFile_OnClick");
+                        b.Add().Name(GridColumnButtonName.Edit);
+                        b.Add().Name(GridColumnButtonName.Delete);
+                    });
+            })
+            .Editing(e => e.Mode(GridEditMode.Batch).AllowUpdating(true).AllowDeleting(isManager).UseIcons(true)
+            .Form(form => form.Items(items => items.AddSimpleFor(m => m.Barcode))))
+        )
+}
+
+@using (Html.DevExtreme().NamedTemplate("RecognizedFilesTemplate"))
+{
+    @(Html.DevExtreme().DataGrid<BarcodeFileViewModel>()
+            .ID("grdTempFiles")
+             .DataSource(d => d.Mvc().Controller("Preview").LoadAction("GetRecognizedFiles"))
+            .RepaintChangesOnly(true)
+            .ErrorRowEnabled(false)
+            .SearchPanel(s => s.Visible(true).Width(250).HighlightSearchText(false))
+            .HeaderFilter(f => f.Visible(true).AllowSearch(true))
+            .ShowBorders(true)
+            .Paging(p => p.PageSize(25))
+            .Pager(p => p.Visible(true).ShowPageSizeSelector(true).AllowedPageSizes(new[] { 25, 50, 100, 250, 500, 1000 }).ShowInfo(true))
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.Path).Visible(false);
+                columns.AddFor(m => m.OrgUnit).AllowEditing(false);
+                columns.AddFor(m => m.Date).Format(GlobalConfig.DateTimeFormat).AllowEditing(false);
+                columns.AddFor(m => m.Barcode).AllowEditing(false);
+                columns.Add()
+                    .Type(GridCommandColumnType.Buttons)
+                    .Visible(true)
+                    .Width(50)
+                    .Buttons(b =>
+                    {
+                        b.Add().Name("PreviewFile").Icon("fa fa-search").Hint(_view["PreviewFile"].Value).OnClick("previewFile_OnClick");
+                    });
+            })
+        )
+}
+
+@(Html.DevExtreme().Popup()
+    .ID("fileViewerPopup")
+    .ShowTitle(true)
+    .Height("100%")
+    .ResizeEnabled(true)
+    .Position(pos => pos
+        .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+        .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+        .Of(new JS("window"))
+    )
+    .CloseOnOutsideClick(true)
+)
+
+<script asp-append-version="true">
+    const previewFile_OnClick = e => {
+        openInNewWindow(e.row.data.RemotePath);
+    }
+
+    const grdBarcodeFiles_OnRowUpdated = e => {
+        if (e.data !== undefined && e.key.length > 0) {
+            showNotification('divNotification', 'success', '@_notify.GetValue(NotificationsHelper.BarcodeFileUpdateSuccess, true)', 5000);
+        }
+    }
+
+    const grdBarcodeFiles_OnRowRemoved = e => {
+        if (e.data !== undefined && e.key.length > 0) {
+            showNotification('divNotification', 'success', '@_notify.GetValue(NotificationsHelper.BarcodeFileDeleteSuccess, true)', 5000);
+        }
+    }
+
+    const grdBarcodeFiles_OnDataErrorOccurred = e => {
+        showNotification('divNotification', 'warning', e.error.message, 5000);
+    }
+
+    const tabPanels_OnSelectionChanged = e => {
+        if (e.addedItems[0].title === '@_view["DIFF"].Value.ToUpper().ToUnicode()') {
+            reloadDataGridSource('grdBarcodeFiles');
+        }
+
+        if (e.addedItems[0].title === '@_view["TEMP"].Value.ToUpper().ToUnicode()') {
+            reloadDataGridSource('grdTempFiles');
+        }
+    }
+</script>

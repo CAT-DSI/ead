@@ -1,0 +1,62 @@
+<div style="margin-right: 5px;">
+    <button type="button" onclick="displayPopup('barcodeHelp');" class="btn btn-outline-info" style="font-weight: bold;">
+        @_view["Help"].Value.ToUpper()
+    </button>
+</div>
+
+@(
+    Html.DevExtreme().Popup()
+        .ID("barcodeHelp")
+        .Height(500)
+        .Width(500)
+        .ShowTitle(true)
+        .Title(_view["Help"].Value)
+        .Visible(false)
+        .DragEnabled(false)
+        .CloseOnOutsideClick(true)
+        .ContentTemplate(new TemplateName("BarcodeHelpTemplate"))
+)
+
+@using (Html.DevExtreme().NamedTemplate("BarcodeHelpTemplate"))
+{
+    <h3>
+        @_view["SuffixOrPrefix"].Value:
+    </h3>
+    <ul>
+        <li>
+            <b>%</b> @_view["ReplacesAnyCharacter"].Value
+        </li>
+        <li>
+            <b>[0-1]</b> @_view["ContainsOnlyNumeric"].Value
+        </li>
+        <li>
+            <b>[A-Z]</b> @_view["ContainsOnlyLetters"].Value
+        </li>
+        <li>
+            <b>X|Y</b> @_view["XorY"].Value (@_view["ReplaceWithAnyCharacter"].Value)
+        </li>
+    </ul>
+    <h3>
+        @_view["OutputfileName"].Value:
+    </h3>
+    <ul>
+        <li>
+            <b>EMPTY</b> @_view["OriginalFileName"].Value
+        </li>
+        <li>
+            <b>%TIMESTAMP%</b> @_view["TimeStamp"].Value (yyyyMMddHHmmss)
+        </li>
+        <li>
+            <b>%BARCODE%</b> @_view["Barcode"].Value
+        </li>
+        <li>
+            <b>%(-X)BARCODE%</b> @_view["Barcode"].Value (X - @_view["NumberOfCharsToRemove"].Value)
+        </li>
+        <li>
+            <b>%BARCODE(-X)%</b> @_view["Barcode"].Value (X - @_view["NumberOfCharsToRemove"].Value)
+        </li>
+        <li>
+            <b>%(-X)BARCODE(-X)%</b> @_view["Barcode"].Value (X - @_view["NumberOfCharsToRemove"].Value)
+        </li>
+    </ul>
+}

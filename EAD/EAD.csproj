@@ -1,0 +1,230 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <UserSecretsId>8b44232c-a241-4852-846e-f34b8fa317bb</UserSecretsId>
+    <StartupObject>EAD.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\js\helpers\**" />
+    <Content Remove="wwwroot\js\helpers\**" />
+    <EmbeddedResource Remove="wwwroot\js\helpers\**" />
+    <None Remove="wwwroot\js\helpers\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\devextreme\fonts\Roboto-300.woff2" />
+    <None Include="wwwroot\css\devextreme\fonts\Roboto-400.woff2" />
+    <None Include="wwwroot\css\devextreme\fonts\Roboto-500.woff2" />
+    <None Include="wwwroot\css\devextreme\fonts\Roboto-700.woff2" />
+    <None Include="wwwroot\css\devextreme\icons\dxicons.woff2" />
+    <None Include="wwwroot\css\devextreme\icons\dxiconsmaterial.woff2" />
+    <None Include="wwwroot\js\devextreme\aspnet\dx.aspnet.data.js" />
+    <None Include="wwwroot\js\devextreme\aspnet\dx.aspnet.mvc.js" />
+    <None Include="wwwroot\js\devextreme\bootstrap.js" />
+    <None Include="wwwroot\js\devextreme\bootstrap.min.js" />
+    <None Include="wwwroot\js\devextreme\cldr.js" />
+    <None Include="wwwroot\js\devextreme\cldr.min.js" />
+    <None Include="wwwroot\js\devextreme\cldr\event.js" />
+    <None Include="wwwroot\js\devextreme\cldr\event.min.js" />
+    <None Include="wwwroot\js\devextreme\cldr\supplemental.js" />
+    <None Include="wwwroot\js\devextreme\cldr\supplemental.min.js" />
+    <None Include="wwwroot\js\devextreme\cldr\unresolved.js" />
+    <None Include="wwwroot\js\devextreme\cldr\unresolved.min.js" />
+    <None Include="wwwroot\js\devextreme\dx-diagram.js" />
+    <None Include="wwwroot\js\devextreme\dx-diagram.min.js" />
+    <None Include="wwwroot\js\devextreme\dx-gantt.js" />
+    <None Include="wwwroot\js\devextreme\dx-gantt.min.js" />
+    <None Include="wwwroot\js\devextreme\dx.all.debug.js" />
+    <None Include="wwwroot\js\devextreme\dx.all.js" />
+    <None Include="wwwroot\js\devextreme\dx.viz-web.js" />
+    <None Include="wwwroot\js\devextreme\dx.viz.debug.js" />
+    <None Include="wwwroot\js\devextreme\dx.viz.js" />
+    <None Include="wwwroot\js\devextreme\dx.web.debug.js" />
+    <None Include="wwwroot\js\devextreme\dx.web.js" />
+    <None Include="wwwroot\js\devextreme\globalize.js" />
+    <None Include="wwwroot\js\devextreme\globalize.min.js" />
+    <None Include="wwwroot\js\devextreme\globalize\currency.js" />
+    <None Include="wwwroot\js\devextreme\globalize\currency.min.js" />
+    <None Include="wwwroot\js\devextreme\globalize\date.js" />
+    <None Include="wwwroot\js\devextreme\globalize\date.min.js" />
+    <None Include="wwwroot\js\devextreme\globalize\message.js" />
+    <None Include="wwwroot\js\devextreme\globalize\message.min.js" />
+    <None Include="wwwroot\js\devextreme\globalize\number.js" />
+    <None Include="wwwroot\js\devextreme\globalize\number.min.js" />
+    <None Include="wwwroot\js\devextreme\jquery.js" />
+    <None Include="wwwroot\js\devextreme\jquery.min.js" />
+    <None Include="wwwroot\js\devextreme\jszip.js" />
+    <None Include="wwwroot\js\devextreme\jszip.min.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.cs.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.de.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.el.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.en.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.es.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.fi.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.fr.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.hu.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.it.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.ja.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.nl.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.pl.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.pt.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.ru.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.sl.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.sv.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.tr.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.vi.js" />
+    <None Include="wwwroot\js\devextreme\localization\dx.messages.zh.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\africa.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\canada.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\eurasia.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\europe.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\usa.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-data\world.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-utils\dx.vectormaputils.debug.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-utils\dx.vectormaputils.js" />
+    <None Include="wwwroot\js\devextreme\vectormap-utils\dx.vectormaputils.node.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\utils.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="ClosedXML" Version="0.97.0" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.6" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NLog" Version="5.0.5" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.5" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="20.1.3" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.41" />
+    <PackageReference Include="System.DirectoryServices" Version="7.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Data\FtpTransferStatus.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Data\FtpTransferStatus.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Data\LogInResult.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Data\LogInResult.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\NotificationsHelper.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\NotificationsHelper.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\FtpConfigurationViewModel.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\FtpConfigurationViewModel.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\FtpResultViewModel.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\FtpResultViewModel.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\LogInViewModel.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\LogInViewModel.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\OcrConfigurationViewModel.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\OcrConfigurationViewModel.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\AccessDenied.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\AccessDenied.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\LogIn.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\LogIn.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\LogsPreview\Index.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\LogsPreview\Index.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\Index.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\Index.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_BarcodeHelpPartial.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_BarcodeHelpPartial.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_ExportConfigurationsPartial.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_ExportConfigurationsPartial.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_ImportConfigurationPartial.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Ocr\_ImportConfigurationPartial.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Preview\Index.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Preview\Index.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

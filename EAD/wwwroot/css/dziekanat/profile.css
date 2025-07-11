@@ -1,0 +1,168 @@
+﻿.content .widget-container .card-row {
+    box-sizing: border-box;
+    flex-basis: 49%;
+    margin-bottom: 2%;
+    padding: 10px;
+    position: relative;
+}
+
+.content .widget-container .cards {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content .widget-container .card-column {
+    background-color: #FFFFFF;
+    border: 1px solid #E9E9E9;
+    box-sizing: border-box;
+    flex-basis: 49%;
+    margin-bottom: 2%;
+    padding: 10px;
+}
+
+.content .widget-container .card-row:first-child {
+    background-color: #FFFFFF;
+    border: 1px solid #E9E9E9;
+    flex-basis: 49%;
+}
+
+.content .widget-container .card-column:last-child {
+    margin-bottom: 0;
+}
+
+.content .widget-container .card-row:last-child {
+    padding: 0;
+}
+
+@media (min-width:1100px) {
+    .content .widget-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .content .widget-container .card-row:first-child {
+            background-color: #FFFFFF;
+            border: 1px solid #E9E9E9;
+            margin-right: 10px;
+            flex-basis: 51%;
+        }
+
+        .content .widget-container .card-row {
+            margin-bottom: 0;
+        }
+
+        .content .widget-container .card-column {
+            margin-bottom: 10px;
+        }
+}
+
+.avatar-container-menu {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+    .avatar-container-menu .avatar {
+        height: 40px;
+        width: 40px;
+        border: 1px solid #d2d3d5;
+        border-radius: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+    }
+
+    .avatar-container-menu .nav-link {
+        padding: .1rem .5rem .1rem .5rem;
+    }
+
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+    .avatar-container .avatar {
+        height: 100px;
+        width: 100px;
+        margin-right: 10px;
+        border: 1px solid #d2d3d5;
+        border-radius: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+    }
+
+    .avatar-container .avatar-upload {
+        display: inline-table;
+        position: relative;
+        min-width: 60px;
+        max-width: 60px;
+        margin-left: -45px;
+    }
+
+        .avatar-container .avatar-upload .dx-button.dx-button-has-icon:not(.dx-button-has-text):not(.dx-shape-standard) {
+            border: 1px solid #d2d3d5;
+        }
+
+.personalDetails .personalDetail-name {
+    text-align: center;
+    font-weight: 400;
+    font-size: 28px;
+    font-style: normal;
+    color: #333;
+    font-family: "Segoe UI","Helvetica Neue",Helvetica,Verdana,"san-serif";
+}
+
+.personalDetails .personalDetail-position {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    font-family: "Segoe UI","Helvetica Neue",Helvetica,Verdana,"san-serif";
+}
+
+.personalDetails .personalDetail {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    font-family: "Segoe UI","Helvetica Neue",Helvetica,Verdana,"san-serif";
+    display: flex;
+    padding: 5px;
+}
+
+    .personalDetails .personalDetail .personalDetail-icon {
+        background-color: #eaeaea;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 43px;
+    }
+
+    .personalDetails .personalDetail .personalDetail-text {
+        padding-left: 10px;
+        vertical-align: middle;
+        line-height: 35px;
+    }
+
+.button-account {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    margin-top: 10px;
+}
+
+.button-password {
+    position: initial;
+    float: right;
+}
+
+#form-container {
+    margin-bottom: 10px;
+}

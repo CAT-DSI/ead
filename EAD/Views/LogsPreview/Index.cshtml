@@ -1,0 +1,139 @@
+@{
+    ViewData["Title"] = _view["Title"].Value;
+    DateTime CurrentDate = DateTime.Now;
+}
+
+@inject IStringLocalizer<FtpResultViewModel> _viewModel
+
+<div class="row h-100">
+    <div class="col-sm-12" style="display: inline-flex; align-items: center;">
+        @(_view["Date"].Value)&nbsp;@(_view["From"].Value.ToLower()):&nbsp;<div id="txtStartDate"></div>&nbsp;@(_view["To"].Value.ToLower()):&nbsp;<div id="txtEndDate"></div>&nbsp;<button class="btn btn-outline-success" onclick="displayLogs();"><b>@(_view["Display"].Value.ToUpper())</b></button>
+    </div>
+</div>
+
+<div class="row h-100">
+    <div class="col-sm-12">
+        <div id="grdFtpResults"></div>
+    </div>
+</div>
+
+<script asp-append-version="true">
+    const dateFormat = '@GlobalConfig.DateFormat';
+    const currentDate = new Date();
+    $(document).ready(() => {
+        $('#txtStartDate').dxDateBox({
+            displayFormat: dateFormat,
+            value: currentDate,
+            width: 130
+        });
+
+        $('#txtEndDate').dxDateBox({
+            displayFormat: dateFormat,
+            value: currentDate,
+            width: 130
+        });
+
+        $('#grdFtpResults').dxDataGrid({
+            dataSource: DevExpress.data.AspNet.createStore({
+                key: 'FilePath',
+                loadUrl: `/LogsPreview/Get?startDate=${getStartDate()}&endDate=${getEndDate()}`
+            }),
+            showBorders: true,
+            repaintChangesOnly: true,
+            export: {
+                enabled: true,
+                allowExportSelectedData: true
+            },
+            onExport: e => {
+                e.fileName = '@_view["LogsPreview"].Value.ToUnicode()';
+            },
+            headerFilter: {
+                allowSearch: true,
+                visible: true
+            },
+            pager: {
+                allowedPageSizes: [25, 50, 100, 250, 500, 1000],
+                showInfo: true,
+                showPageSizeSelector: true,
+                visible: true
+            },
+            paging: {
+                pageSize: 25
+            },
+            searchPanel: {
+                highlightSearchText: false,
+                visible: true,
+                width: 250
+            },
+            columns: [
+                {
+                    dataField: 'FilePath',
+                    alignment: 'left',
+                    visible: false
+                },
+                {
+                    dataField: 'RemotePath',
+                    alignment: 'left',
+                    visible: false
+                },
+                {
+                    dataField: 'Date',
+                    dataType: 'date',
+                    format: '@GlobalConfig.DateTimeFormat',
+                    caption: `@(_viewModel["Date"].Value)`,
+                    alignment: 'left',
+                    width: 150
+                },
+                {
+                    dataField: 'Barcode',
+                    alignment: 'left',
+                    caption: `@(_viewModel["Barcode"].Value)`
+                },
+                {
+                    dataField: 'Host',
+                    alignment: 'left',
+                    caption: `@(_viewModel["Host"].Value)`
+                },
+                {
+                    dataField: 'Status',
+                    alignment: 'left',
+                    caption: `@(_viewModel["Status"].Value)`,
+                    lookup: {
+                        dataSource: @Html.Raw(Html.GetEnumSelectList<FtpTransferStatus>().Select(i => new { Value = int.Parse(i.Value), Text = i.Text }).ToJson()),
+                        valueExpr: 'Value',
+                        displayExpr: 'Text'
+                    }
+                },
+                {
+                    type: 'buttons',
+                    fixed: true,
+                    visible: true,
+                    width: 50,
+                    showInColumnChooser: false,
+                    buttons: [
+                        {
+                            icon: 'fa fa-search',
+                            hint: '@(_view["PreviewFile"].Value.ToUnicode())',
+                            onClick: e => openInNewWindow(e.row.data.RemotePath)
+                        }
+                    ]
+                }
+            ]
+        });
+    });
+
+    const getEndDate = () => {
+        return formatDate(getDateBoxValue('txtEndDate').toLocaleDateString('en-US').split('/'));
+    };
+
+    const getStartDate = () => {
+        return formatDate(getDateBoxValue('txtStartDate').toLocaleDateString('en-US').split('/'));
+    };
+
+    const displayLogs = () => {
+        setDataGridSource('grdFtpResults', DevExpress.data.AspNet.createStore({
+            key: 'FilePath',
+            loadUrl: `/LogsPreview/Get?startDate=${getStartDate()}&endDate=${getEndDate()}`
+        }));
+    };
+</script>

@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = _view["Title"].Value;
+    ViewData["DataGridId"] = "grdConfigurations";
+
+    bool isManager = User.IsInRole(PermissionsType.IsManager);
+}
+
+<div class="row h-100">
+    <div class="col-sm-12">
+        @if (isManager)
+        {
+            <div style="display: inline-flex;">
+                @await Html.PartialAsync("_ExportConfigurationsPartial", ViewData)
+                @await Html.PartialAsync("_ImportConfigurationPartial", ViewData)
+                @await Html.PartialAsync("_BarcodeHelpPartial", ViewData)
+            </div>
+        }
+        @(Html.DevExtreme().DataGrid<OcrConfigurationViewModel>()
+            .ID("grdConfigurations")
+            .OnInitNewRow("grdConfigurations_OnInitNewRow")
+            .OnRowInserted("grdConfigurations_OnRowInserted")
+            .OnRowUpdated("grdConfigurations_OnRowUpdated")
+            .OnRowRemoved("grdConfigurations_OnRowRemoved")
+            .OnDataErrorOccurred("grdConfigurations_OnDataErrorOccurred")
+            .ErrorRowEnabled(false)
+            .RepaintChangesOnly(true)
+            .DataSource(d => d.Mvc().Controller("Ocr").LoadAction("Get").InsertAction("Post").InsertMethod("Get").UpdateAction("Put").UpdateMethod("Get").DeleteAction("Delete").DeleteMethod("Get").Key("Id"))
+            .SearchPanel(s => s.Visible(true).Width(250).HighlightSearchText(false))
+            .HeaderFilter(f => f.Visible(true).AllowSearch(true))
+            .ShowBorders(true)
+            .Paging(p => p.PageSize(25))
+            .Pager(p => p.Visible(true).ShowPageSizeSelector(true).AllowedPageSizes(new[] { 25, 50, 100, 250, 500, 1000 }).ShowInfo(true))
+            .Selection(s => s.Mode(SelectionMode.Multiple))
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.Id).Visible(false).Alignment(HorizontalAlignment.Left).ShowInColumnChooser(false);
+                columns.AddFor(m => m.FtpConfigurationId).Visible(false).Alignment(HorizontalAlignment.Left).ShowInColumnChooser(false);
+                columns.AddFor(m => m.Name).Alignment(HorizontalAlignment.Left).SortOrder(SortOrder.Asc);
+                columns.AddFor(m => m.BarcodeLength).Alignment(HorizontalAlignment.Left).Visible(true);
+                columns.AddFor(m => m.BarcodePrefix).Alignment(HorizontalAlignment.Left);
+                columns.AddFor(m => m.BarcodeSuffix).Alignment(HorizontalAlignment.Left);
+                columns.AddFor(m => m.DirectoryPath).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.Host).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.Port).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.IsSFTP).Alignment(HorizontalAlignment.Left).ShowEditorAlways(false).Visible(false);
+                columns.AddFor(m => m.Username).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.Password).Alignment(HorizontalAlignment.Left).ShowInColumnChooser(isManager).Visible(false);
+                columns.AddFor(m => m.FileName).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.Directory).Alignment(HorizontalAlignment.Left).Visible(false);
+                columns.AddFor(m => m.CreatedById).Alignment(HorizontalAlignment.Left);
+                columns.AddFor(m => m.CreatedDate).Alignment(HorizontalAlignment.Left).Format(GlobalConfig.DateTimeFormat).Width(170);
+                columns.AddFor(m => m.UpdatedById).Alignment(HorizontalAlignment.Left);
+                columns.AddFor(m => m.UpdatedDate).Alignment(HorizontalAlignment.Left).Format(GlobalConfig.DateTimeFormat).Width(170);
+            })
+            .Editing(editing => editing.Mode(GridEditMode.Form)
+            .AllowAdding(isManager)
+            .AllowDeleting(isManager)
+            .AllowUpdating(isManager)
+            .UseIcons(true)
+            .Form(form => form.ColCount(6).Items(items =>
+            {
+                items.AddGroup().ColCount(6).ColSpan(6).Caption($"{_view["GeneralSettings"].Value}:").Items(general =>
+                {
+                    general.AddSimpleFor(m => m.Name).Editor(e => e.TextBox().MaxLength(24)).ColSpan(3).IsRequired(true);
+                    general.AddSimpleFor(m => m.DirectoryPath).Editor(e => e.TextBox().MaxLength(256)).ColSpan(3).IsRequired(true);
+                });
+
+                items.AddGroup().ColCount(6).ColSpan(6).Caption($"{_view["BarcodeSettings"].Value}:").Items(barcode =>
+                {
+                    barcode.AddSimpleFor(m => m.BarcodeLength).Editor(e => e.NumberBox().Value(null)).ColSpan(2).IsRequired(true);
+                    barcode.AddSimpleFor(m => m.BarcodePrefix).Editor(e => e.TextBox().MaxLength(64)).ColSpan(2).IsRequired(false);
+                    barcode.AddSimpleFor(m => m.BarcodeSuffix).Editor(e => e.TextBox().MaxLength(64)).ColSpan(2).IsRequired(false);
+                });
+
+                items.AddGroup().ColCount(6).ColSpan(6).Caption(_view["ServerSettings"].Value).Items(server =>
+                {
+                    server.AddSimpleFor(m => m.Host).Editor(e => e.TextBox().MaxLength(64)).ColSpan(2).IsRequired(false);
+                    server.AddSimpleFor(m => m.Port).Editor(e => e.NumberBox().Value(null)).ColSpan(2).IsRequired(false);
+                    server.AddSimpleFor(m => m.IsSFTP).Editor(e => e.Switch()).ColSpan(2).IsRequired(false);
+                });
+
+                items.AddGroup().ColCount(6).ColSpan(6).Caption(_view["Credentials"].Value).Items(credentials =>
+                {
+                    credentials.AddSimpleFor(m => m.Username).Editor(e => e.TextBox().MaxLength(64)).ColSpan(3).IsRequired(false);
+                    credentials.AddSimpleFor(m => m.Password).Editor(e => e.TextBox().MaxLength(64)).ColSpan(3).IsRequired(false);
+                });
+
+                items.AddGroup().ColCount(6).ColSpan(6).Caption(_view["OthersSettings"].Value).Items(others =>
+                {
+                    others.AddSimpleFor(m => m.FileName).Editor(e => e.TextBox().MaxLength(128)).ColSpan(3).IsRequired(false);
+                    others.AddSimpleFor(m => m.Directory).Editor(e => e.TextBox().MaxLength(256)).ColSpan(3).IsRequired(false);
+                });
+            })))
+        )
+    </div>
+</div>
+
+<script asp-append-version="true">
+    const grdConfigurations_OnRowInserted = e => {
+        if (e.data !== undefined) {
+            showNotification('divNotification', 'success', '@_notify.GetValue(NotificationsHelper.OcrConfigurationAddSuccess, true)', 5000);
+        }
+    }
+
+    const grdConfigurations_OnRowUpdated = e => {
+        if (e.data !== undefined && e.key > 0) {
+            showNotification('divNotification', 'success', '@_notify.GetValue(NotificationsHelper.OcrConfigurationUpdateSuccess, true)', 5000);
+        }
+    }
+
+    const grdConfigurations_OnRowRemoved = e => {
+        if (e.data !== undefined && e.key > 0) {
+            showNotification('divNotification', 'success', '@_notify.GetValue(NotificationsHelper.OcrConfigurationDeleteSuccess, true)', 5000);
+        }
+    }
+
+    const grdConfigurations_OnDataErrorOccurred = e => {
+        showNotification('divNotification', 'warning', e.error.message, 5000);
+    }
+
+    const grdConfigurations_OnInitNewRow = e => {
+        e.data.Id = 0;
+        e.data.FtpConfigurationId = 0;
+    }
+</script>

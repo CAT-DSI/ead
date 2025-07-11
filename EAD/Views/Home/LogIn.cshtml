@@ -1,0 +1,260 @@
+﻿@{
+    ViewData["Title"] = _view["Title"].Value;
+    Layout = null;
+
+    Language language = Context.Request.GetLanguage();
+
+    string domain = CookieHelper.GetValue(Context.Request, "Domain");
+    string userName = CookieHelper.GetValue(Context.Request, "UserName");
+}
+
+@inject IStringLocalizer<LogInViewModel> _viewModel
+
+@model LogInViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EAD - @ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")" />
+    <link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Passion+One:900" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(@Url.Content("~/images/Background.jpg"));
+            height: 100%;
+            width: 100%;
+        }
+
+        .card-container.card {
+            max-width: 500px;
+            padding: 40px 40px;
+        }
+
+        .btn {
+            font-weight: 700;
+            height: 36px;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        .card {
+            background-color: #F7F7F7;
+            padding: 20px 25px 30px;
+            margin: 0 auto 25px;
+            margin-top: 50px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            -moz-box-shadow: 0 2px 2px #000000;
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 2px 2px #000000;
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 2px #000000;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-img-card {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 10px;
+            display: block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .profile-name-card {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0 0;
+            min-height: 1em;
+        }
+
+        .reauth-email {
+            display: block;
+            color: #404040;
+            line-height: 2;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .form-signin #inputEmail,
+        .form-signin #inputPassword {
+            direction: ltr;
+            height: 44px;
+            font-size: 16px;
+        }
+
+        .form-signin input[type=email],
+        .form-signin input[type=password],
+        .form-signin input[type=text],
+        .form-signin button {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+            z-index: 1;
+            position: relative;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .form-signin .form-control:focus {
+            border-color: rgb(104, 145, 162);
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px #000000,0 0 8px rgb(104, 145, 162);
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+            box-shadow: inset 0 1px 1px #000000,0 0 8px rgb(104, 145, 162);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+        }
+
+        .btn.btn-signin {
+            background-color: rgb(104, 145, 162);
+            padding: 0;
+            font-weight: 700;
+            font-size: 14px;
+            height: 36px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: none;
+            -o-transition: all 0.218s;
+            -moz-transition: all 0.218s;
+            -webkit-transition: all 0.218s;
+            transition: all 0.218s;
+        }
+
+            .btn.btn-signin:hover,
+            .btn.btn-signin:active,
+            .btn.btn-signin:focus {
+                background-color: rgb(12, 97, 33);
+            }
+
+        .forgot-password {
+            color: rgb(104, 145, 162);
+        }
+
+            .forgot-password:hover,
+            .forgot-password:active,
+            .forgot-password:focus {
+                color: rgb(12, 97, 33);
+            }
+    </style>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/devextreme/dx.greenmist.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/devextreme.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+</head>
+<body onload="displayNotification();">
+    <div class="content mt-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4" style="text-align: center; margin-top: 150px;">
+                        <div class="container">
+                            <div class="card card-container">
+                                <img id="imgUserPhoto" src="~/images/UserIcon.png" style="height: 100px; width: 100px" class="profile-img-card" />
+                                <p id="profile-name" class="profile-name-card"></p>
+                                <div class="form-signin">
+                                    @using (Html.BeginForm("LogIn", "Home", FormMethod.Post))
+                                    {
+                                        @Html.ValidationSummary(true)
+                                        <div class="form-horizontal">
+                                            <h4>
+                                                <b>@_view["EnterCredentials"].Value</b>
+                                            </h4>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-3" style="text-align: right; margin-top: 5px;">
+                                                    @_viewModel["Domain"].Value
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    @(Html.DevExtreme().SelectBox().Name("Domain").DataSource(d => d.Array().Data(GlobalConfig.Domains)).ValueExpr("Path").DisplayExpr("Name").Value(domain).ShowClearButton(true))
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3" style="text-align: right; margin-top: 5px;">
+                                                    @_viewModel["Login"].Value
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    @(Html.DevExtreme().TextBox().Name("UserName").Mode(TextBoxMode.Text).Value(userName))
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3" style="text-align: right; margin-top: 5px;">
+                                                    @_viewModel["Password"].Value
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    @(Html.DevExtreme().TextBox().Name("Password").Mode(TextBoxMode.Password))
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <input type="submit" class="btn btn-success" value="@_view["LogIn"].Value" style="width: 200px;" />
+                                                    <div id="divNotification" class="notification"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/js/utils.js" asp-append-version="true"></script>
+<script src="~/js/notifications.js" asp-append-version="true"></script>
+@if (language == Language.Polish && Context.Request.Query["culture"] == "pl-PL")
+{
+    <script src="~/js/devextreme/localization/dx.messages.pl.js" asp-append-version="true"></script>
+}
+else
+{
+    <script src="~/js/devextreme/localization/dx.messages.en.js" asp-append-version="true"></script>
+}
+
+<script type="text/javascript">
+        const displayNotification =>() {
+            const notification = '@(TempData["Notification"] != null ? TempData["Notification"].ToString() : "")';
+            if (!!notification) {
+            const type = notification.split('|')[0];
+            const message = notification.split('|')[1];
+                if (type !== '' && message !== '') {
+                    showNotification('divNotification', type, message, 5000);
+                }
+            }
+        }
+</script>

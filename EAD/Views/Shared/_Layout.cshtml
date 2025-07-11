@@ -1,0 +1,125 @@
+﻿@{
+    if (ViewData["Title"] == null)
+    {
+        ViewData["Title"] = _view["Title"].Value;
+    }
+
+    Language language = Context.Request.GetLanguage();
+
+    string url = Context.Request.Path;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EAD - @ViewData["Title"] </title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/devextreme/dx.greenmist.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/devextreme.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/userProfile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+    @RenderSection("Stylesheets", required: false)
+    <script src="~/js/devextreme.min.js" asp-append-version="true"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-light border-bottom fixed-top" style="background-color: #0190FE;">
+            @(Html.DevExtreme().Button().Icon("menu").OnClick("CATApps.onMenuButtonClick").StylingMode(ButtonStylingMode.Text))
+
+            <b><a href="#" onclick="redirectToUrl('/Preview');" class="navbar-brand" style="color: #000000">&nbsp; EAD - @ViewData["Title"] </a></b>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                @(await Html.PartialAsync("_LoginPartial"))
+            </div>
+        </nav>
+    </header>
+
+    <div class="layout-body layout-body-hidden">
+        @(Html.DevExtreme().Drawer()
+            .ID("layout-drawer")
+            .Position(DrawerPosition.Left)
+            .Opened(new JS("CATApps.restoreDrawerOpened()"))
+            .OpenedStateMode(DrawerOpenedStateMode.Shrink)
+            .RevealMode(DrawerRevealMode.Expand)
+            .Content(
+                @<text>
+                    <div id="layout-drawer-scrollview" class="with-footer"><div class="content">
+                        <div id="divNotification" class="notification"></div>
+                        <div id="divLoadIndicator" class="load-indicator" style="display: none; text-align: center; padding: 15px; border: 2px dotted black; background: white;">
+                        @(Html.DevExtreme().LoadIndicator().Height(50).Width(50).Visible(true))
+                        <div style="margin-top: 5px; font-weight: bold; font-size: x-large;">
+                            @(language == Language.Polish ? "Ładowanie" : "Loading")...
+                        </div>
+                        </div>@RenderBody()</div></div>
+                </text>)
+            .Template(new TemplateName("navigation-menu"))
+        )
+    </div>
+
+    @using (Html.DevExtreme().NamedTemplate("navigation-menu"))
+    {
+        <div class="menu-container dx-swatch-additional" style="background-color: #272C33 !important;">
+            @(Html.DevExtreme().TreeView().ExpandAllEnabled(true)
+                .Items(items =>
+                {
+                    items.Add().Text(_view["Preview"].Value).Icon("fa fa-search").Option("path", "/Preview").Selected(url.Contains("/Preview"));
+
+                    items.Add().Text(_view["Configuration"].Value).Icon("fa fa-folder-open").Option("path", "/Ocr").Selected(url.Contains("/Ocr"));
+
+                    items.Add().Text(_view["LogsPreview"].Value).Icon("fas fa-exclamation-triangle").Option("path", "/LogsPreview").Selected(url.Contains("/LogsPreview"));
+
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        items.Add().Text(_view["LogOut"].Value).Icon("fa fa-power-off").Option("path", "/Home/LogOut");
+                    }
+                })
+                .ExpandEvent(TreeViewExpandEvent.Click)
+                .SelectionMode(NavSelectionMode.Single)
+                .SelectedExpr("selected")
+                .FocusStateEnabled(false)
+                .Width(270)
+                .OnItemClick("CATApps.onTreeViewItemClick")
+            )
+        </div>
+    }
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/utils.js" asp-append-version="true"></script>
+    <script src="~/js/notifications.js" asp-append-version="true"></script>
+    <script src="~/js/cookiesHelper.js" asp-append-version="true"></script>
+    <script src="~/js/loadIndicator.js" asp-append-version="true"></script>
+    <script src="~/js/devExtremeHelper.js" asp-append-version="true"></script>
+    <script src="~/js/httpHelper.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/localization/dx.messages.@(language == Language.Polish ? "pl" : "en").js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-append-version="true">
+        $(() => {
+            DevExpress.localization.locale('@(language == Language.Polish ? "pl" : "en")');
+            DevExpress.config({ defaultCurrency: "PLN" });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script asp-append-version="true">
+        $(document).ready(() => {
+            const notification = '@(TempData["Notification"] != null ? TempData["Notification"].ToString() : "")';
+
+            if (notification !== '') {
+                const type = notification.split('|')[0];
+                const message = notification.split('|')[1];
+
+                if (type !== '' && message !== '') {
+                    showNotification('divNotification', type, message, 5000);
+                    @(TempData["Notification"] = null)
+                }
+            }
+        });
+    </script>
+</body>
+</html>
